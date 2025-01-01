@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Page</title>
+  <link rel="stylesheet" href="setting.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#profile-settings">Profile Settings</a></li>
+        <li><a href="#account-settings">Account Settings</a></li>
+        <li><a href="#privacy-settings">Privacy Settings</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="profile-settings">
+      <h2>Profile Settings</h2>
+      <form>
+        <div class="field">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+        </div>
+        <div class="field">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+        </div>
+        <button type="submit">Save Changes</button>
+      </form>
+    </section>
+
+    <section id="account-settings">
+      <h2>Account Settings</h2>
+      <form>
+        <div class="field">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="field">
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" id="confirm-password" name="confirm-password">
+        </div>
+        <button type="submit">Update Password</button>
+      </form>
+    </section>
+
+    <section id="privacy-settings">
+      <h2>Privacy Settings</h2>
+      <form>
+        <div class="field">
+          <label for="visibility">Profile Visibility:</label>
+          <select id="visibility" name="visibility">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+          </select>
+        </div>
+        <button type="submit">Save Privacy Settings</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

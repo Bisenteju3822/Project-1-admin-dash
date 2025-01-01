@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Management</title>
+  <link rel="stylesheet" href="json.css">
+</head>
+
+<body>
+  <h1>Product Management</h1>
+
+  <section id="products">
+    <h2>Products</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="showdata">
+
+        <tr>
+          <td>Product 1</td>
+          <td>$10.99</td>
+          <td>High-quality widget</td>
+          <td>
+            <button onclick="editProduct(1)">update</button>
+            <button onclick="deleteProduct(1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Product 2</td>
+          <td>$15.99</td>
+          <td>Advanced gadget</td>
+          <td>
+            <button onclick="editProduct(2)">update</button>
+            <button onclick="deleteProduct(2)">Delete</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+  <div id="editform"></div>
+
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/products');
+        const data = await response.json();
+        displayData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    function displayData(data) {
+      const tbody = document.getElementById('showdata');
+      tbody.innerHTML = '';
+
+      data.forEach(product => {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = product.name;
+        row.appendChild(nameCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `$${product.price.toFixed(2)}`;
+        row.appendChild(priceCell);
+
+        const descriptionCell = document.createElement('td');
+        descriptionCell.textContent = product.description;
+        row.appendChild(descriptionCell);
+
+        const actionCell = document.createElement('td');
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.onclick = () => myedit(product.id);
+        actionCell.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = () => deleteProduct(product.id);
+        actionCell.appendChild(deleteButton);
+
+        row.appendChild(actionCell);
+        tbody.appendChild(row);
+      });
+    }
+
+    async function myedit(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/products/${id}`);
+        const product = await response.json();
+        const editForm = `
+<input type="text" id="id1" value="${product.id}" readonly><br>
+<input type="text" id="name1" value="${product.name}"><br>
+<input type="number" id="price1" value="${product.price}"><br>
+<input type="text" id="description1" value="${product.description}"><br>
+<input type="button" value="Update" onclick="finalupdate(${product.id})">`;
+
+        document.querySelector('#editform').innerHTML = editForm;
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    }
+
+    async function finalupdate(id) {
+      const updatedData = {
+        name: document.querySelector('#name1').value,
+        price: parseFloat(document.querySelector('#price1').value),
+        description: document.querySelector('#description1').value
+      };
+
+      try {
+        const response = await fetch(`http://localhost:3000/products/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+          alert("Update successful!");
+          fetchData(); // Refresh the data after update
+        } else {
+          alert("Update failed!");
+        }
+      } catch (error) {
+        console.error('Error updating product data:', error);
+      }
+    }
+
+    async function deleteProduct(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/products/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          alert("Delete successful!");
+          fetchData(); // Refresh the data after delete
+        } else {
+          alert("Delete failed!");
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', fetchData);
+  </script>
+</body>
+
+</html>

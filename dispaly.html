@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visiting Card Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  /* styles.css */
+  body {
+    background-image: url("Screenshot\ 2024-11-29\ 165330.png");
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+  }
+
+  .container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+
+  .field {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  button.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button.btn:hover {
+    background-color: #0056b3;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .card h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  .card p {
+    margin: 5px 0;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h2>Enter Details</h2>
+    <div class="field">
+      <label for="name">PRODUCT ID:</label>
+      <input type="text" id="name">
+    </div>
+    <div class="field">
+      <label for="designation">PRODUCT PRICE:</label>
+      <input type="text" id="designation">
+    </div>
+    <div class="field">
+      <label for="contact">PAYMENT METHOD:</label>
+      <input type="text" id="contact">
+    </div>
+    <div class="field">
+      <label for="email">EMAIL:</label>
+      <input type="text" id="email">
+    </div>
+    <button class="btn" onclick="generateCard()">Generate Card</button>
+  </div>
+
+  <div class="card" id="visitingCard" style="display: none;">
+    <h3 id="cardName"></h3>
+    <p id="cardDesignation"></p>
+    <p id="cardContact"></p>
+    <p id="cardEmail"></p>
+  </div>
+
+  <script>
+    function generateCard() {
+      let name = document.querySelector("#name").value;
+      let designation = document.querySelector("#designation").value;
+      let contact = document.querySelector("#contact").value;
+      let email = document.querySelector("#email").value;
+
+      document.querySelector("#cardName").innerText = name;
+      document.querySelector("#cardDesignation").innerText = designation;
+      document.querySelector("#cardContact").innerText = contact;
+      document.querySelector("#cardEmail").innerText = email;
+
+      document.querySelector("#visitingCard").style.display = "block";
+    }
+  </script>
+</body>
+
+</html>
